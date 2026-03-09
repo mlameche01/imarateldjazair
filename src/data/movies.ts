@@ -309,10 +309,10 @@ export const movies: Movie[] = [
 export const categories = [
   { name: "Tendances", movies: [movies[0], movies[6], movies[9], movies[2], movies[5], movies[11], movies[17]] },
   { name: "Classiques du Domaine Public", movies: [movies[9], movies[7], movies[13], movies[10], movies[16], movies[14], movies[12], movies[15]] },
-  { name: "Horreur & Frissons", movies: [movies[6], movies[7], movies[15], movies[14], movies[3], movies[16]] },
+  { name: "Horreur & Frissons", movies: [movies[6], movies[7], movies[15], movies[14], movies[3], movies[20]] },
   { name: "Science-Fiction", movies: [movies[9], movies[12], movies[0], movies[16]] },
-  { name: "Comédie & Divertissement", movies: [movies[10], movies[11], movies[17], movies[23], movies[4]] },
-  { name: "Film Noir & Thriller", movies: [movies[8], movies[14], movies[19], movies[1]] },
-  { name: "Aventure & Action", movies: [movies[13], movies[17], movies[23], movies[5], movies[2]] },
-  { name: "Romance & Drame", movies: [movies[21], movies[18], movies[4], movies[22]] },
+  { name: "Comédie & Divertissement", movies: [movies[10], movies[11], movies[4], movies[22]] },
+  { name: "Film Noir & Thriller", movies: [movies[8], movies[19], movies[1], movies[14]] },
+  { name: "Aventure & Action", movies: [movies[13], movies[17], movies[5], movies[2]] },
+  { name: "Romance & Drame", movies: [movies[21], movies[18], movies[4]] },
 ];

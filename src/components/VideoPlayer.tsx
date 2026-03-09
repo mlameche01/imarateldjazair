@@ -1,5 +1,5 @@
-import { X, Play, Pause, Maximize, Volume2, SkipForward, SkipBack } from "lucide-react";
-import { useState } from "react";
+import { X, Play, Pause, Maximize, Volume2, VolumeX, SkipForward, SkipBack } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { Movie } from "@/data/movies";
 
 interface VideoPlayerProps {
@@ -8,8 +8,64 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ movie, onClose }: VideoPlayerProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState("0:00");
+  const [totalDuration, setTotalDuration] = useState("0:00");
+  const [muted, setMuted] = useState(false);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const onTimeUpdate = () => {
+      setProgress((video.currentTime / video.duration) * 100);
+      setCurrentTime(formatTime(video.currentTime));
+    };
+    const onLoaded = () => setTotalDuration(formatTime(video.duration));
+    const onEnded = () => setPlaying(false);
+
+    video.addEventListener("timeupdate", onTimeUpdate);
+    video.addEventListener("loadedmetadata", onLoaded);
+    video.addEventListener("ended", onEnded);
+    return () => {
+      video.removeEventListener("timeupdate", onTimeUpdate);
+      video.removeEventListener("loadedmetadata", onLoaded);
+      video.removeEventListener("ended", onEnded);
+    };
+  }, []);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (playing) {
+      video.pause();
+    } else {
+      video.play();
+    }
+    setPlaying(!playing);
+  };
+
+  const seek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const video = videoRef.current;
+    if (!video) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    video.currentTime = pct * video.duration;
+  };
+
+  const skip = (seconds: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.currentTime = Math.max(0, Math.min(video.duration, video.currentTime + seconds));
+  };
 
   return (
     <div className="fixed inset-0 z-[100] bg-background/98 flex flex-col">
@@ -21,40 +77,32 @@ const VideoPlayer = ({ movie, onClose }: VideoPlayerProps) => {
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4">
-        <div className="relative w-full max-w-5xl aspect-video bg-card rounded-lg overflow-hidden">
-          <img
-            src={movie.poster}
-            alt={movie.title}
-            className="w-full h-full object-cover opacity-40 blur-sm"
+        <div className="relative w-full max-w-5xl aspect-video bg-card rounded-lg overflow-hidden group">
+          <video
+            ref={videoRef}
+            src={movie.video}
+            className="w-full h-full object-contain bg-black"
+            onClick={togglePlay}
+            playsInline
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <button
-              onClick={() => setPlaying(!playing)}
-              className="p-6 rounded-full bg-primary/90 glow hover:bg-primary transition-colors"
-            >
-              {playing ? (
-                <Pause className="w-10 h-10 text-primary-foreground" />
-              ) : (
-                <Play className="w-10 h-10 text-primary-foreground fill-current" />
-              )}
-            </button>
-          </div>
 
-          {/* Ad banner placeholder */}
+          {/* Center play button when paused */}
           {!playing && (
-            <div className="absolute top-4 left-4 right-4 bg-secondary/80 backdrop-blur rounded px-4 py-2 text-center text-xs text-muted-foreground">
-              🎬 Publicité — Le streaming gratuit grâce à nos partenaires
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <button
+                onClick={togglePlay}
+                className="p-6 rounded-full bg-primary/90 glow hover:bg-primary transition-colors pointer-events-auto"
+              >
+                <Play className="w-10 h-10 text-primary-foreground fill-current" />
+              </button>
             </div>
           )}
 
           {/* Controls */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent">
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
             <div
               className="w-full h-1 bg-secondary rounded-full mb-3 cursor-pointer"
-              onClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                setProgress(((e.clientX - rect.left) / rect.width) * 100);
-              }}
+              onClick={seek}
             >
               <div
                 className="h-full bg-primary rounded-full transition-all"
@@ -63,15 +111,23 @@ const VideoPlayer = ({ movie, onClose }: VideoPlayerProps) => {
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <button onClick={() => setPlaying(!playing)} className="hover:text-primary transition-colors">
+                <button onClick={togglePlay} className="hover:text-primary transition-colors">
                   {playing ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-current" />}
                 </button>
-                <SkipBack className="w-4 h-4 text-muted-foreground hover:text-foreground cursor-pointer" />
-                <SkipForward className="w-4 h-4 text-muted-foreground hover:text-foreground cursor-pointer" />
-                <Volume2 className="w-4 h-4 text-muted-foreground hover:text-foreground cursor-pointer" />
-                <span className="text-xs text-muted-foreground">0:00 / {movie.duration}</span>
+                <button onClick={() => skip(-10)} className="hover:text-foreground transition-colors">
+                  <SkipBack className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+                </button>
+                <button onClick={() => skip(10)} className="hover:text-foreground transition-colors">
+                  <SkipForward className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+                </button>
+                <button onClick={() => { setMuted(!muted); if (videoRef.current) videoRef.current.muted = !muted; }} className="hover:text-foreground transition-colors">
+                  {muted ? <VolumeX className="w-4 h-4 text-muted-foreground" /> : <Volume2 className="w-4 h-4 text-muted-foreground" />}
+                </button>
+                <span className="text-xs text-muted-foreground">{currentTime} / {totalDuration}</span>
               </div>
-              <Maximize className="w-4 h-4 text-muted-foreground hover:text-foreground cursor-pointer" />
+              <button onClick={() => videoRef.current?.requestFullscreen()} className="hover:text-foreground transition-colors">
+                <Maximize className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+              </button>
             </div>
           </div>
         </div>

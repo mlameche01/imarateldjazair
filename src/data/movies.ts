@@ -10,6 +10,7 @@ export interface Movie {
   title: string;
   description: string;
   poster: string;
+  video: string;
   genre: string;
   year: number;
   duration: string;
@@ -22,6 +23,7 @@ export const movies: Movie[] = [
     title: "Horizon Zero",
     description: "Un astronaute perdu dans l'espace découvre une planète mystérieuse qui pourrait abriter les secrets de l'humanité. Une odyssée spatiale captivante.",
     poster: movie1,
+    video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     genre: "Science-Fiction",
     year: 2024,
     duration: "2h 18min",
@@ -32,6 +34,7 @@ export const movies: Movie[] = [
     title: "Ombres Nocturnes",
     description: "Une détective traque un tueur en série dans les rues pluvieuses d'une mégapole. Chaque indice la rapproche du danger.",
     poster: movie2,
+    video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     genre: "Thriller",
     year: 2024,
     duration: "1h 52min",
@@ -42,6 +45,7 @@ export const movies: Movie[] = [
     title: "Le Dernier Dragon",
     description: "Dans un monde médiéval fantastique, un guerrier solitaire doit affronter le dernier dragon pour sauver son royaume.",
     poster: movie3,
+    video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     genre: "Fantaisie",
     year: 2023,
     duration: "2h 35min",
@@ -52,6 +56,7 @@ export const movies: Movie[] = [
     title: "La Maison Maudite",
     description: "Une famille emménage dans un manoir victorien hanté par des esprits anciens. L'horreur commence à la tombée de la nuit.",
     poster: movie4,
+    video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     genre: "Horreur",
     year: 2024,
     duration: "1h 45min",
@@ -62,6 +67,7 @@ export const movies: Movie[] = [
     title: "Paris Mon Amour",
     description: "Deux inconnus se rencontrent sur les toits de Paris et vivent une histoire d'amour inoubliable au coucher du soleil.",
     poster: movie5,
+    video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     genre: "Romance",
     year: 2023,
     duration: "1h 38min",
@@ -72,6 +78,7 @@ export const movies: Movie[] = [
     title: "Vitesse Mortelle",
     description: "Une course-poursuite infernale sur les autoroutes d'une ville en flammes. L'action à son paroxysme.",
     poster: movie6,
+    video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     genre: "Action",
     year: 2024,
     duration: "2h 05min",

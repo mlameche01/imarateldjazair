@@ -1,42 +1,68 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Play, Tv, Globe, Star } from "lucide-react";
+import Hls from "hls.js";
 
 interface Channel {
   name: string;
   category: string;
   streamUrl: string;
   country: string;
+  type: "youtube" | "hls";
 }
 
 const channels: Channel[] = [
-  // Algériennes
-  { name: "ENTV (Programme National)", category: "algerie", streamUrl: "https://www.youtube.com/embed/DnCKgsvHmPA?autoplay=1", country: "🇩🇿" },
-  { name: "Canal Algérie", category: "algerie", streamUrl: "https://www.youtube.com/embed/6FROq_vJVWs?autoplay=1", country: "🇩🇿" },
-  { name: "TV Coran Algérie", category: "algerie", streamUrl: "https://www.youtube.com/embed/QwNFGYBJ2NE?autoplay=1", country: "🇩🇿" },
-  { name: "Echorouk TV", category: "algerie", streamUrl: "https://www.youtube.com/embed/S10fH7t0wSI?autoplay=1", country: "🇩🇿" },
-  { name: "Ennahar TV", category: "algerie", streamUrl: "https://www.youtube.com/embed/u4r8M9vl8L0?autoplay=1", country: "🇩🇿" },
-  { name: "El Bilad TV", category: "algerie", streamUrl: "https://www.youtube.com/embed/6s3bRn0f3qg?autoplay=1", country: "🇩🇿" },
-  // Infos internationales
-  { name: "Al Jazeera Arabic", category: "info", streamUrl: "https://www.youtube.com/embed/bNyUyrR0PHo?autoplay=1", country: "🇶🇦" },
-  { name: "France 24 Français", category: "info", streamUrl: "https://www.youtube.com/embed/l8PMl7tUDIE?autoplay=1", country: "🇫🇷" },
-  { name: "RT France", category: "info", streamUrl: "https://www.youtube.com/embed/1gRnuEB1MqY?autoplay=1", country: "🇷🇺" },
-  { name: "TRT World", category: "info", streamUrl: "https://www.youtube.com/embed/CV5Fooi8YJE?autoplay=1", country: "🇹🇷" },
-  { name: "Sky News Arabia", category: "info", streamUrl: "https://www.youtube.com/embed/mS6BJYvl1tE?autoplay=1", country: "🇦🇪" },
-  // Religieuses
-  { name: "Makkah Live", category: "religion", streamUrl: "https://www.youtube.com/embed/bB4cARj0nEY?autoplay=1", country: "🇸🇦" },
-  { name: "Madinah Live", category: "religion", streamUrl: "https://www.youtube.com/embed/MASVKZ7ZTXM?autoplay=1", country: "🇸🇦" },
-  { name: "Quran TV", category: "religion", streamUrl: "https://www.youtube.com/embed/rLcuw1zeJhQ?autoplay=1", country: "🇸🇦" },
-  // Sport
-  { name: "beIN Sports News", category: "sport", streamUrl: "https://www.youtube.com/embed/ha3sYr-jRBg?autoplay=1", country: "🇶🇦" },
+  // Infos internationales (YouTube)
+  { name: "Al Jazeera Arabic", category: "info", streamUrl: "https://www.youtube.com/embed/bNyUyrR0PHo?autoplay=1", country: "🇶🇦", type: "youtube" },
+  { name: "France 24 Français", category: "info", streamUrl: "https://www.youtube.com/embed/l8PMl7tUDIE?autoplay=1", country: "🇫🇷", type: "youtube" },
+  // Suisse francophone (HLS)
+  { name: "Léman Bleu", category: "suisse", streamUrl: "http://livevideo.infomaniak.com/streaming/livecast/naxoo/playlist.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Canal 9", category: "suisse", streamUrl: "https://livehd.vedge.infomaniak.com/livecast/livehd/master.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Canal Alpha Jura", category: "suisse", streamUrl: "https://canalalphaju.vedge.infomaniak.com/livecast/ik:canalalphaju/playlist.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Couleur 3", category: "suisse", streamUrl: "https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "KTO", category: "suisse", streamUrl: "https://live-kto.akamaized.net/hls/live/2033284/KTO/master.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "RT France", category: "suisse", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Meteonews", category: "suisse", streamUrl: "https://streaming.meteonews.net/hls/stream.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Rhône TV", category: "suisse", streamUrl: "https://edge14.vedge.infomaniak.com/livecast/ik:rhonetv/manifest.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "TeleBielingue", category: "suisse", streamUrl: "https://viamotionhsi.netplus.ch/live/eds/telebielingue/browser-HLS8/telebielingue.m3u8", country: "🇨🇭", type: "hls" },
 ];
 
 const categories = [
   { id: "all", label: "Toutes", icon: Tv },
-  { id: "algerie", label: "Algérie", icon: Star },
   { id: "info", label: "Infos", icon: Globe },
-  { id: "religion", label: "Religion", icon: Star },
-  { id: "sport", label: "Sport", icon: Play },
+  { id: "suisse", label: "Suisse FR", icon: Star },
 ];
+
+const HlsPlayer = ({ src }: { src: string }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(src);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch(() => {});
+      });
+      return () => hls.destroy();
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = src;
+      video.play().catch(() => {});
+    }
+  }, [src]);
+
+  return (
+    <video
+      ref={videoRef}
+      className="w-full h-full bg-black"
+      controls
+      autoPlay
+      muted
+    />
+  );
+};
 
 const IPTVPage = () => {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -52,13 +78,17 @@ const IPTVPage = () => {
       <div className="w-full bg-black">
         <div className="max-w-6xl mx-auto">
           <div className="aspect-video">
-            <iframe
-              src={activeChannel.streamUrl}
-              className="w-full h-full"
-              allow="autoplay; fullscreen; encrypted-media"
-              allowFullScreen
-              title={activeChannel.name}
-            />
+            {activeChannel.type === "youtube" ? (
+              <iframe
+                src={activeChannel.streamUrl}
+                className="w-full h-full"
+                allow="autoplay; fullscreen; encrypted-media"
+                allowFullScreen
+                title={activeChannel.name}
+              />
+            ) : (
+              <HlsPlayer src={activeChannel.streamUrl} />
+            )}
           </div>
           <div className="px-4 py-3 flex items-center gap-3">
             <span className="text-2xl">{activeChannel.country}</span>
@@ -103,7 +133,9 @@ const IPTVPage = () => {
               <span className="text-2xl">{channel.country}</span>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm text-foreground truncate">{channel.name}</p>
-                <p className="text-xs text-muted-foreground capitalize">{channel.category === "algerie" ? "Algérie" : channel.category === "info" ? "International" : channel.category}</p>
+                <p className="text-xs text-muted-foreground capitalize">
+                  {channel.category === "suisse" ? "Suisse FR" : "International"}
+                </p>
               </div>
               <Play className="w-4 h-4 text-primary shrink-0" />
             </button>

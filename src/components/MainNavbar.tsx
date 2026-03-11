@@ -7,6 +7,7 @@ const navItems = [
   { path: "/", label: "Accueil" },
   { path: "/cinema", label: "Cinéma" },
   { path: "/radios", label: "Radios" },
+  { path: "/algiers-radio", label: "Algiers Radio" },
   { path: "/iptv", label: "IPTV" },
   { path: "/articles", label: "Articles" },
   { path: "/jetons", label: "Jetons" },

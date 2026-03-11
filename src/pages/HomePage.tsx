@@ -63,24 +63,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Swap Widget */}
-      <section className="py-16 px-4">
-        <div className="max-w-lg mx-auto">
-          <h2 className="text-3xl md:text-4xl text-center text-gradient mb-2">Swap DZD sur Polygon</h2>
-          <p className="text-center text-muted-foreground text-sm mb-8">
-            Échangez vos tokens directement sur le réseau Polygon
-          </p>
-          <div className="card-shine rounded-xl p-6 border border-border">
-            <iframe
-              src="https://embed.ipfscdn.io/ipfs/bafybeigtqeyfmqkfbdu7ubjlwsqbyilrvumxnpxlu2ey7ib5m2ix2hjq2q/erc20.html?contract=0x07221c2D1dc1D5485Bf069871E2820864B4948F7&chain=%7B%22name%22%3A%22Polygon+Mainnet%22%2C%22chain%22%3A%22Polygon%22%2C%22rpc%22%3A%5B%22https%3A%2F%2F137.rpc.thirdweb.com%2F%22%5D%2C%22nativeCurrency%22%3A%7B%22name%22%3A%22MATIC%22%2C%22symbol%22%3A%22MATIC%22%2C%22decimals%22%3A18%7D%2C%22shortName%22%3A%22matic%22%2C%22chainId%22%3A137%2C%22slug%22%3A%22polygon%22%7D&theme=dark&primaryColor=cyan"
-              className="w-full rounded-lg"
-              style={{ height: "420px", border: "none" }}
-              title="Swap DZD"
-            />
-          </div>
-        </div>
-      </section>
-
       {/* Quick Links Grid */}
       <section className="px-4 md:px-12 py-16 bg-card/50">
         <h2 className="text-3xl md:text-4xl text-center text-gradient mb-10">Explorer l'Écosystème</h2>

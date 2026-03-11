@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainNavbar from "@/components/MainNavbar";
 import HomePage from "./pages/HomePage";
-import CinemaPage from "./pages/CinemaPage";
 import RadiosPage from "./pages/RadiosPage";
 import IPTVPage from "./pages/IPTVPage";
 import ArticlesPage from "./pages/ArticlesPage";

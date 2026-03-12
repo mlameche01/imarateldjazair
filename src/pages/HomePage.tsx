@@ -84,13 +84,19 @@ const HomePage = () => {
       <footer className="px-4 md:px-12 py-12 border-t border-border">
         <div className="max-w-5xl mx-auto text-center">
           <h3 className="text-2xl tracking-wide text-gradient mb-4">Imarat El Djazair</h3>
-          <p className="text-sm text-muted-foreground max-w-md mx-auto mb-4">
+          <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
             Écosystème numérique souverain. Décentralisé. Non-aligné.
           </p>
-          <div className="flex gap-6 justify-center text-xs text-muted-foreground">
+          <div className="flex gap-6 justify-center mb-8 text-xs text-muted-foreground">
             <Link to="/livre-blanc" className="hover:text-foreground">Livre Blanc</Link>
             <Link to="/jetons" className="hover:text-foreground">Jetons</Link>
             <Link to="/articles" className="hover:text-foreground">Articles</Link>
+          </div>
+          <div className="flex gap-6 justify-center text-sm">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Facebook</a>
+            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Google</a>
+            <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">ChatGPT</a>
+            <a href="https://suno.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Suno</a>
           </div>
         </div>
       </footer>

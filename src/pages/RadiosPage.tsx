@@ -10,11 +10,11 @@ interface RadioItem {
 }
 
 const radios: RadioItem[] = [
-  { name: "Radio Zaman", url: "https://my.radioalgerie.dz/ar/zamanfm", type: "iframe" },
+  { name: "Radio Tunisie", url: "http://rtstream.tanitweb.com/nationale", type: "stream" },
   { name: "Radio Bahdja", url: "https://my.radioalgerie.dz/player/bahdja.html", type: "iframe" },
   { name: "Radio Tindouf", url: "https://my.radioalgerie.dz/player/tindouf.html", type: "iframe" },
   { name: "Radio Médéa", url: "https://my.radioalgerie.dz/player/medea.html", type: "iframe" },
-  { name: "FIP", url: "https://icecast.radiofrance.fr/fip-midfi.mp3", type: "stream" },
+  { name: "Radio Culturelle", url: "http://rtstream.tanitweb.com/culturelle", type: "stream" },
   { name: "Europe 1", url: "https://europe1.leanstream.co/europe1-midfi.mp3", type: "stream" },
   { name: "France Inter", url: "https://icecast.radiofrance.fr/franceinter-midfi.mp3", type: "stream" },
   { name: "RTL", url: "https://streamer-02.rtl.fr/rtl-1-44-128", type: "stream" },

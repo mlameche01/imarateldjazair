@@ -2,10 +2,10 @@ import { useState, useRef } from "react";
 import { Radio, Volume2, VolumeX } from "lucide-react";
 
 const radios = [
-  { name: "Radio Coran", url: "https://stream.radiojar.com/8s5u5tpdp7zuv" },
-  { name: "Radio Bahdja", url: "https://webradio.tda.dz/Bahdja_64K.mp3" },
-  { name: "Radio Tindouf", url: "https://webradio.tda.dz/Tindouf_64K.mp3" },
-  { name: "Radio Médéa", url: "https://webradio.tda.dz/Medea_64K.mp3" },
+  { name: "Radio Coran", url: "https://my.radioalgerie.dz/pla/coranyer.html" },
+  { name: "Radio Bahdja", url: "https://my.radioalgerie.dz/player/bahdja.html" },
+  { name: "Radio Tindouf", url: "https://my.radioalgerie.dz/player/tindouf.html" },
+  { name: "Radio Médéa", url: "https://my.radioalgerie.dz/player/medea.html" },
   { name: "FIP", url: "https://icecast.radiofrance.fr/fip-midfi.mp3" },
   { name: "Europe 1", url: "https://europe1.leanstream.co/europe1-midfi.mp3" },
   { name: "France Inter", url: "https://icecast.radiofrance.fr/franceinter-midfi.mp3" },

@@ -10,7 +10,7 @@ interface RadioItem {
 }
 
 const radios: RadioItem[] = [
-  { name: "Radio Tunisie", url: "http://rtstream.tanitweb.com/nationale", type: "stream" },
+  { name: "Radio Tunisie", url: "https://radiomosaiquefm.net/player/", type: "iframe" },
   { name: "Radio Bahdja", url: "https://my.radioalgerie.dz/player/bahdja.html", type: "iframe" },
   { name: "Radio Tindouf", url: "https://my.radioalgerie.dz/player/tindouf.html", type: "iframe" },
   { name: "Radio Médéa", url: "https://my.radioalgerie.dz/player/medea.html", type: "iframe" },

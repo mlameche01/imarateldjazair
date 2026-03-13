@@ -1,31 +1,50 @@
 import { useState, useRef } from "react";
-import { Radio, Volume2, VolumeX } from "lucide-react";
+import { Radio, Volume2, VolumeX, X } from "lucide-react";
 
-const radios = [
-  { name: "Radio Coran", url: "https://my.radioalgerie.dz/pla/coranyer.html" },
-  { name: "Radio Bahdja", url: "https://my.radioalgerie.dz/player/bahdja.html" },
-  { name: "Radio Tindouf", url: "https://my.radioalgerie.dz/player/tindouf.html" },
-  { name: "Radio Médéa", url: "https://my.radioalgerie.dz/player/medea.html" },
-  { name: "FIP", url: "https://icecast.radiofrance.fr/fip-midfi.mp3" },
-  { name: "Europe 1", url: "https://europe1.leanstream.co/europe1-midfi.mp3" },
-  { name: "France Inter", url: "https://icecast.radiofrance.fr/franceinter-midfi.mp3" },
-  { name: "RTL", url: "https://streamer-02.rtl.fr/rtl-1-44-128" },
+type RadioType = "stream" | "iframe";
+
+interface RadioItem {
+  name: string;
+  url: string;
+  type: RadioType;
+}
+
+const radios: RadioItem[] = [
+  { name: "Radio Coran", url: "https://my.radioalgerie.dz/pla/coranyer.html", type: "iframe" },
+  { name: "Radio Bahdja", url: "https://my.radioalgerie.dz/player/bahdja.html", type: "iframe" },
+  { name: "Radio Tindouf", url: "https://my.radioalgerie.dz/player/tindouf.html", type: "iframe" },
+  { name: "Radio Médéa", url: "https://my.radioalgerie.dz/player/medea.html", type: "iframe" },
+  { name: "FIP", url: "https://icecast.radiofrance.fr/fip-midfi.mp3", type: "stream" },
+  { name: "Europe 1", url: "https://europe1.leanstream.co/europe1-midfi.mp3", type: "stream" },
+  { name: "France Inter", url: "https://icecast.radiofrance.fr/franceinter-midfi.mp3", type: "stream" },
+  { name: "RTL", url: "https://streamer-02.rtl.fr/rtl-1-44-128", type: "stream" },
 ];
 
 const RadiosPage = () => {
   const [currentRadio, setCurrentRadio] = useState<string | null>(null);
+  const [iframeRadio, setIframeRadio] = useState<RadioItem | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const playRadio = (url: string, name: string) => {
+  const playRadio = (radio: RadioItem) => {
+    // Stop any current audio
     if (audioRef.current) {
       audioRef.current.pause();
+      audioRef.current = null;
     }
-    const audio = new Audio(url);
-    audio.play();
-    audioRef.current = audio;
-    setCurrentRadio(name);
-    setIsPlaying(true);
+    setIframeRadio(null);
+
+    if (radio.type === "iframe") {
+      setIframeRadio(radio);
+      setCurrentRadio(radio.name);
+      setIsPlaying(true);
+    } else {
+      const audio = new Audio(radio.url);
+      audio.play();
+      audioRef.current = audio;
+      setCurrentRadio(radio.name);
+      setIsPlaying(true);
+    }
   };
 
   const stopRadio = () => {
@@ -33,6 +52,7 @@ const RadiosPage = () => {
       audioRef.current.pause();
       audioRef.current = null;
     }
+    setIframeRadio(null);
     setIsPlaying(false);
     setCurrentRadio(null);
   };
@@ -48,7 +68,7 @@ const RadiosPage = () => {
             <button
               key={radio.name}
               onClick={() =>
-                currentRadio === radio.name ? stopRadio() : playRadio(radio.url, radio.name)
+                currentRadio === radio.name ? stopRadio() : playRadio(radio)
               }
               className={`flex items-center gap-4 p-4 rounded-xl border transition-all text-left ${
                 currentRadio === radio.name
@@ -67,7 +87,26 @@ const RadiosPage = () => {
           ))}
         </div>
 
-        {currentRadio && (
+        {/* Iframe player for Algerian radios */}
+        {iframeRadio && (
+          <div className="mt-6 rounded-xl overflow-hidden border border-border">
+            <div className="flex items-center justify-between bg-secondary/50 px-4 py-2">
+              <span className="text-sm font-medium">{iframeRadio.name}</span>
+              <button onClick={stopRadio} className="p-1 rounded-full hover:bg-secondary">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <iframe
+              src={iframeRadio.url}
+              className="w-full h-[200px] border-0"
+              allow="autoplay; encrypted-media"
+              title={iframeRadio.name}
+            />
+          </div>
+        )}
+
+        {/* Bottom bar for stream radios */}
+        {currentRadio && !iframeRadio && (
           <div className="fixed bottom-0 left-0 right-0 glass border-t border-border p-4 flex items-center justify-between z-50">
             <div className="flex items-center gap-3">
               <Volume2 className="w-5 h-5 text-primary animate-pulse" />

@@ -10,7 +10,7 @@ interface RadioItem {
 }
 
 const radios: RadioItem[] = [
-  { name: "Radio Coran", url: "https://my.radioalgerie.dz/pla/coranyer.html", type: "iframe" },
+  { name: "Radio Zaman", url: "https://my.radioalgerie.dz/ar/zamanfm", type: "iframe" },
   { name: "Radio Bahdja", url: "https://my.radioalgerie.dz/player/bahdja.html", type: "iframe" },
   { name: "Radio Tindouf", url: "https://my.radioalgerie.dz/player/tindouf.html", type: "iframe" },
   { name: "Radio Médéa", url: "https://my.radioalgerie.dz/player/medea.html", type: "iframe" },

@@ -11,19 +11,13 @@ interface Channel {
 }
 
 const channels: Channel[] = [
-  // Infos internationales (YouTube)
-  { name: "Al Jazeera Arabic", category: "info", streamUrl: "https://www.youtube.com/embed/bNyUyrR0PHo?autoplay=1", country: "🇶🇦", type: "youtube" },
   { name: "France 24 Français", category: "info", streamUrl: "https://www.youtube.com/embed/l8PMl7tUDIE?autoplay=1", country: "🇫🇷", type: "youtube" },
-  // Suisse francophone (HLS)
-  { name: "Léman Bleu", category: "suisse", streamUrl: "http://livevideo.infomaniak.com/streaming/livecast/naxoo/playlist.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "Canal 9", category: "suisse", streamUrl: "https://livehd.vedge.infomaniak.com/livecast/livehd/master.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "Canal Alpha Jura", category: "suisse", streamUrl: "https://canalalphaju.vedge.infomaniak.com/livecast/ik:canalalphaju/playlist.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "Couleur 3", category: "suisse", streamUrl: "https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "KTO", category: "suisse", streamUrl: "https://live-kto.akamaized.net/hls/live/2033284/KTO/master.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "RT France", category: "suisse", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "Meteonews", category: "suisse", streamUrl: "https://streaming.meteonews.net/hls/stream.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "Rhône TV", category: "suisse", streamUrl: "https://edge14.vedge.infomaniak.com/livecast/ik:rhonetv/manifest.m3u8", country: "🇨🇭", type: "hls" },
-  { name: "TeleBielingue", category: "suisse", streamUrl: "https://viamotionhsi.netplus.ch/live/eds/telebielingue/browser-HLS8/telebielingue.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "RT France", category: "info", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "🇷🇺", type: "hls" },
+  { name: "One FM", category: "suisse", streamUrl: "https://onefmhd.vedge.infomaniak.com/livecast/ik:onefmhd/manifest.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Event TV", category: "suisse", streamUrl: "https://edge13.vedge.infomaniak.com/livecast/ik:event/manifest.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Compack Media", category: "suisse", streamUrl: "https://edge17.vedge.infomaniak.com/livecast/ik:compack_media_1/playlist.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "LFM TV", category: "suisse", streamUrl: "https://lfmhd.vedge.infomaniak.com/livecast/lfmhd/playlist.m3u8", country: "🇨🇭", type: "hls" },
+  { name: "Rakuten Ciné", category: "suisse", streamUrl: "https://zylo-cinenanar-rakuten.amagi.tv/playlist.m3u8", country: "🌍", type: "hls" },
 ];
 
 const categories = [

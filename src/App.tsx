@@ -12,6 +12,7 @@ import JetonsPage from "./pages/JetonsPage";
 import ReligionPage from "./pages/ReligionPage";
 import LivreBlancPage from "./pages/LivreBlancPage";
 import AlgiersRadioPage from "./pages/AlgiersRadioPage";
+import BitrefillPage from "./pages/BitrefillPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/religion" element={<ReligionPage />} />
           <Route path="/livre-blanc" element={<LivreBlancPage />} />
           <Route path="/algiers-radio" element={<AlgiersRadioPage />} />
+          <Route path="/bitrefill" element={<BitrefillPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -5,7 +5,7 @@ import logo from "@/assets/logo.png";
 
 const navItems = [
   { path: "/", label: "Accueil" },
-  { path: "/algiers-radio", label: "Algiers Radio" },
+  { path: "/algiers-radio", label: "Audius" },
   { path: "/iptv", label: "IPTV" },
   { path: "/articles", label: "Articles" },
   { path: "/jetons", label: "Jetons" },

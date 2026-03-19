@@ -11,6 +11,7 @@ interface Channel {
 }
 
 const channels: Channel[] = [
+  { name: "Al Jazeera Arabic", category: "info", streamUrl: "https://www.youtube.com/embed/bNyUyrR0PHo?autoplay=1", country: "🇶🇦", type: "youtube" },
   { name: "France 24 Français", category: "info", streamUrl: "https://www.youtube.com/embed/l8PMl7tUDIE?autoplay=1", country: "🇫🇷", type: "youtube" },
   { name: "RT France", category: "info", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "🇷🇺", type: "hls" },
   { name: "One FM", category: "suisse", streamUrl: "https://onefmhd.vedge.infomaniak.com/livecast/ik:onefmhd/manifest.m3u8", country: "🇨🇭", type: "hls" },

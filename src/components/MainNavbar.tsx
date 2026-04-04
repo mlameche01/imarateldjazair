@@ -11,7 +11,7 @@ const navItems = [
   { path: "/jetons", label: "Jetons" },
   { path: "/religion", label: "Religion" },
   { path: "/livre-blanc", label: "Livre Blanc" },
-  
+  { path: "/postes", label: "Postes" },
 ];
 
 const MainNavbar = () => {

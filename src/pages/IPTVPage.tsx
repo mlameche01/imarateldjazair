@@ -13,7 +13,8 @@ interface Channel {
 const channels: Channel[] = [
   { name: "Al Jazeera Arabic", category: "info", streamUrl: "https://www.youtube.com/embed/bNyUyrR0PHo?autoplay=1", country: "🇶🇦", type: "youtube" },
   { name: "France 24 Français", category: "info", streamUrl: "https://www.youtube.com/embed/l8PMl7tUDIE?autoplay=1", country: "🇫🇷", type: "youtube" },
-  { name: "RT France", category: "info", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "🇷🇺", type: "hls" },
+  { name: "RT France", category: "info", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "\uD83C\uDDF7\uD83C\uDDFA", type: "hls" },
+  { name: "TV5 Monde", category: "info", streamUrl: "https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8", country: "\uD83C\uDDEB\uD83C\uDDF7", type: "hls" },
   { name: "One FM", category: "suisse", streamUrl: "https://onefmhd.vedge.infomaniak.com/livecast/ik:onefmhd/manifest.m3u8", country: "🇨🇭", type: "hls" },
   { name: "Event TV", category: "suisse", streamUrl: "https://edge13.vedge.infomaniak.com/livecast/ik:event/manifest.m3u8", country: "🇨🇭", type: "hls" },
   { name: "Compack Media", category: "suisse", streamUrl: "https://edge17.vedge.infomaniak.com/livecast/ik:compack_media_1/playlist.m3u8", country: "🇨🇭", type: "hls" },

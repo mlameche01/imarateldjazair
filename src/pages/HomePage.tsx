@@ -63,25 +63,25 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Dircham Presentation */}
+      {/* Dirham Presentation */}
       <section className="px-4 md:px-12 py-16">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-center text-gradient mb-8">Le Token Dircham</h2>
+          <h2 className="text-3xl md:text-4xl text-center text-gradient mb-8">Le Token Dirham</h2>
           <div className="space-y-4 text-sm md:text-base text-muted-foreground leading-relaxed">
             <p>
-              Le token <span className="text-foreground font-semibold">Dircham</span> est une initiative innovante dans l'univers des cryptomonnaies, se distinguant par sa transparence et sa rareté. Contrairement à de nombreux projets où l'offre peut évoluer au fil du temps, le Dircham repose sur un principe fondamental : une quantité fixe et immuable de <span className="text-accent font-semibold">1 000 000 000 unités</span>.
+              Le token <span className="text-foreground font-semibold">Dirham</span> est une initiative innovante dans l'univers des cryptomonnaies, se distinguant par sa transparence et sa rareté. Contrairement à de nombreux projets où l'offre peut évoluer au fil du temps, le Dirham repose sur un principe fondamental : une quantité fixe et immuable de <span className="text-accent font-semibold">1 000 000 000 unités</span>.
             </p>
             <p>
               Ce qui rend ce token particulièrement unique, c'est que l'intégralité de ces unités a déjà été créée (mintée) dès le départ. Aucun nouveau token ne pourra être généré à l'avenir, ce qui garantit une rareté totale et élimine tout risque d'inflation.
             </p>
             <p>
-              De plus, tous les tokens Dircham ont été acquis via du <span className="text-foreground">Polygon</span>, assurant une base technologique fiable, rapide et économique. Une caractéristique essentielle du projet est que l'ensemble des tokens est bloqué sur un exchange, ce qui empêche toute manipulation ou création supplémentaire par le propriétaire du projet.
+              De plus, tous les tokens Dirham ont été acquis via du <span className="text-foreground">Polygon</span>, assurant une base technologique fiable, rapide et économique. Une caractéristique essentielle du projet est que l'ensemble des tokens est bloqué sur un exchange, ce qui empêche toute manipulation ou création supplémentaire par le propriétaire du projet.
             </p>
             <p>
               Ainsi, le créateur lui-même ne dispose d'aucun privilège particulier : il ne peut pas générer de nouveaux tokens ni en obtenir autrement qu'en les achetant, exactement comme n'importe quel autre utilisateur. Ce fonctionnement renforce la confiance, l'équité et la transparence du système.
             </p>
             <p>
-              En résumé, le Dircham se positionne comme un token unique au monde grâce à son offre totalement limitée, sa distribution déjà finalisée, et l'impossibilité absolue pour quiconque — y compris son créateur — d'en produire davantage. Cette approche vise à instaurer un écosystème juste, sécurisé et durable.
+              En résumé, le Dirham se positionne comme un token unique au monde grâce à son offre totalement limitée, sa distribution déjà finalisée, et l'impossibilité absolue pour quiconque — y compris son créateur — d'en produire davantage. Cette approche vise à instaurer un écosystème juste, sécurisé et durable.
             </p>
           </div>
         </div>

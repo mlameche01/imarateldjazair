@@ -3,6 +3,7 @@ import heroHome from "@/assets/hero-home.jpg";
 
 const HomePage = () => {
   const tokenAddress = "0x143D6D24f19Ef7d49F1d351Cd7028353E996921D";
+  const donationAddress = "0xea99BD1cdd9A5067CDc19506B59De5B29631DFD5";
 
   const quickLinks = [
     { label: "🎬 Cinéma", desc: "Films gratuits du domaine public", path: "/cinema" },
@@ -111,6 +112,24 @@ const HomePage = () => {
           <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
             Écosystème numérique souverain. Décentralisé. Non-aligné.
           </p>
+          {/* Donation Section */}
+          <div className="max-w-2xl mx-auto mb-8 p-6 rounded-xl border border-accent/30 bg-card/50">
+            <h4 className="text-lg text-accent mb-2">💛 Soutenir le projet</h4>
+            <p className="text-sm text-muted-foreground mb-4">
+              Aide à maintenir ce projet gratuit et indépendant. Faites un don via EVM (ETH, BNB, Polygon…).
+            </p>
+            <div className="flex flex-col md:flex-row items-center gap-2 justify-center">
+              <code className="text-xs md:text-sm bg-secondary px-3 py-1.5 rounded font-mono text-foreground break-all">
+                {donationAddress}
+              </code>
+              <button
+                onClick={() => navigator.clipboard.writeText(donationAddress)}
+                className="px-3 py-1 rounded bg-accent/20 text-accent text-xs font-medium hover:bg-accent/30 transition-colors"
+              >
+                Copier
+              </button>
+            </div>
+          </div>
           <div className="flex gap-6 justify-center mb-8 text-xs text-muted-foreground">
             <Link to="/livre-blanc" className="hover:text-foreground">Livre Blanc</Link>
             <Link to="/jetons" className="hover:text-foreground">Jetons</Link>
@@ -121,6 +140,7 @@ const HomePage = () => {
             <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Google</a>
             <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">ChatGPT</a>
             <a href="https://suno.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Suno</a>
+            <a href="https://odysee.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Odysee</a>
           </div>
         </div>
       </footer>

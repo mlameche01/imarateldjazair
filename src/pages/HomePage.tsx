@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import heroHome from "@/assets/hero-home.jpg";
+import dirhamCoin from "@/assets/dirham-coin.png.asset.json";
 
 const HomePage = () => {
   const tokenAddress = "0x143D6D24f19Ef7d49F1d351Cd7028353E996921D";
@@ -66,8 +67,15 @@ const HomePage = () => {
 
       {/* Dirham Presentation */}
       <section className="px-4 md:px-12 py-16">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-center text-gradient mb-8">Le Token Dirham</h2>
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
+            <img
+              src={dirhamCoin.url}
+              alt="Pièce Token Dirham (DIR)"
+              className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover glow shadow-2xl border border-accent/30 flex-shrink-0"
+            />
+            <h2 className="text-3xl md:text-4xl text-center md:text-left text-gradient">Le Token Dirham</h2>
+          </div>
           <div className="space-y-4 text-sm md:text-base text-muted-foreground leading-relaxed">
             <p>
               Le token <span className="text-foreground font-semibold">Dirham</span> est une initiative innovante dans l'univers des cryptomonnaies, se distinguant par sa transparence et sa rareté. Contrairement à de nombreux projets où l'offre peut évoluer au fil du temps, le Dirham repose sur un principe fondamental : une quantité fixe et immuable de <span className="text-accent font-semibold">1 000 000 000 unités</span>.

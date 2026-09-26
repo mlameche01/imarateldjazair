@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import dirhamCoin from "@/assets/dirham-coin.png.asset.json";
 
 interface Token {
   name: string;
@@ -40,9 +41,18 @@ const JetonsPage = () => {
               className="card-shine rounded-xl border border-border p-5 hover:border-primary/30 transition-all hover:glow group"
             >
               <div className="flex items-center justify-between mb-3">
-                <div>
-                  <h3 className="font-semibold text-sm group-hover:text-primary transition-colors">{token.name}</h3>
-                  <span className="text-xs text-accent font-medium">{token.symbol}</span>
+                <div className="flex items-center gap-3">
+                  {token.symbol === "DIR" && (
+                    <img
+                      src={dirhamCoin.url}
+                      alt="Token Dirham"
+                      className="w-10 h-10 rounded-full object-cover border border-accent/40"
+                    />
+                  )}
+                  <div>
+                    <h3 className="font-semibold text-sm group-hover:text-primary transition-colors">{token.name}</h3>
+                    <span className="text-xs text-accent font-medium">{token.symbol}</span>
+                  </div>
                 </div>
                 <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
               </div>

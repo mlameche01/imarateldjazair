@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import heroHome from "@/assets/hero-home.jpg";
 import dirhamCoin from "@/assets/dirham-coin.png.asset.json";
+import drapeauImara from "@/assets/drapeau-imara.png.asset.json";
 
 const HomePage = () => {
   const tokenAddress = "0x143D6D24f19Ef7d49F1d351Cd7028353E996921D";
@@ -23,6 +24,11 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-background/60" />
         <div className="absolute inset-0 hero-overlay" />
         <div className="relative z-10 text-center px-4 max-w-3xl">
+          <img
+            src={drapeauImara.url}
+            alt="Drapeau Imarat El Djazair — El 3azzam"
+            className="w-48 md:w-64 mx-auto mb-6 rounded-lg shadow-2xl border border-accent/30 glow"
+          />
           <h1 className="text-5xl md:text-7xl tracking-wider text-gradient mb-4">
             Imarat El Djazair
           </h1>

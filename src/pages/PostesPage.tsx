@@ -8,7 +8,7 @@ const PostesPage = () => {
         Accédez au site Postes en cliquant sur le bouton ci-dessous.
       </p>
       <a
-        href="https://mounirlechoy.tangled.com"
+        href="https://imarateldjazair.lovable.app/"
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground text-lg font-semibold hover:opacity-90 transition-opacity"

@@ -8,11 +8,11 @@ import HomePage from "./pages/HomePage";
 import RadiosPage from "./pages/RadiosPage";
 import IPTVPage from "./pages/IPTVPage";
 import ArticlesPage from "./pages/ArticlesPage";
-import JetonsPage from "./pages/JetonsPage";
 import ReligionPage from "./pages/ReligionPage";
 import LivreBlancPage from "./pages/LivreBlancPage";
 import AlgiersRadioPage from "./pages/AlgiersRadioPage";
 import DzTubePage from "./pages/DzTubePage";
+import HeianWalletPage from "./pages/HeianWalletPage";
 
 import NotFound from "./pages/NotFound";
 
@@ -30,12 +30,11 @@ const App = () => (
           <Route path="/radios" element={<RadiosPage />} />
           <Route path="/iptv" element={<IPTVPage />} />
           <Route path="/articles" element={<ArticlesPage />} />
-          <Route path="/jetons" element={<JetonsPage />} />
           <Route path="/religion" element={<ReligionPage />} />
           <Route path="/livre-blanc" element={<LivreBlancPage />} />
           <Route path="/algiers-radio" element={<AlgiersRadioPage />} />
           <Route path="/dztube" element={<DzTubePage />} />
-          
+          <Route path="/heian-wallet" element={<HeianWalletPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

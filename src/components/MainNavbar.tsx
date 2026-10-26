@@ -8,10 +8,10 @@ const navItems = [
   { path: "/algiers-radio", label: "Audius" },
   { path: "/iptv", label: "IPTV" },
   { path: "/articles", label: "Articles" },
-  { path: "/jetons", label: "Jetons" },
   { path: "/religion", label: "Religion" },
   { path: "/livre-blanc", label: "Livre Blanc" },
   { path: "/dztube", label: "DzTube" },
+  { path: "/heian-wallet", label: "Heian Wallet" },
 ];
 
 const MainNavbar = () => {
@@ -45,14 +45,12 @@ const MainNavbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <a
-            href="https://gate.io"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/heian-wallet"
             className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-primary/30 text-primary text-sm hover:bg-primary/10 transition-colors"
           >
-            Gate Wallet
-          </a>
+            Heian Wallet
+          </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden p-2 rounded-md hover:bg-secondary transition-colors"
@@ -78,14 +76,13 @@ const MainNavbar = () => {
               {item.label}
             </Link>
           ))}
-          <a
-            href="https://gate.io"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/heian-wallet"
+            onClick={() => setMobileOpen(false)}
             className="py-2 px-3 text-sm text-primary"
           >
-            Gate Wallet
-          </a>
+            Heian Wallet
+          </Link>
         </div>
       )}
     </nav>

@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import heroHome from "@/assets/hero-home.jpg";
-import dirhamCoin from "@/assets/dirham-coin.png.asset.json";
 import drapeauImara from "@/assets/drapeau-imara.png.asset.json";
 
 const HomePage = () => {
-  const tokenAddress = "0x143D6D24f19Ef7d49F1d351Cd7028353E996921D";
   const donationAddress = "0xea99BD1cdd9A5067CDc19506B59De5B29631DFD5";
 
   const quickLinks = [
@@ -12,7 +10,7 @@ const HomePage = () => {
     { label: "📻 Radios", desc: "Radios algériennes et internationales", path: "/radios" },
     { label: "📺 IPTV", desc: "Télévision en streaming", path: "/iptv" },
     { label: "📰 Articles", desc: "Analyses géopolitiques et crypto", path: "/articles" },
-    { label: "🪙 Jetons", desc: "Tokens sur Polygon Mainnet", path: "/jetons" },
+    { label: "👛 Heian Wallet", desc: "Wallet open source pour stablecoins", path: "/heian-wallet" },
     { label: "🕌 Religion", desc: "Contenu spirituel et réflexions", path: "/religion" },
   ];
 
@@ -46,58 +44,11 @@ const HomePage = () => {
               Livre Blanc
             </Link>
             <Link
-              to="/jetons"
+              to="/heian-wallet"
               className="px-6 py-2.5 rounded-md border border-accent/50 text-accent font-medium text-sm hover:bg-accent/10 transition-colors"
             >
-              Nos Jetons
+              Heian Wallet
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Token Address Banner */}
-      <section className="bg-card border-y border-border px-4 py-4">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-3 justify-center">
-          <span className="text-sm text-muted-foreground">🚀 Adresse du token DIR :</span>
-          <code className="text-xs md:text-sm bg-secondary px-3 py-1.5 rounded font-mono text-foreground break-all">
-            {tokenAddress}
-          </code>
-          <button
-            onClick={() => navigator.clipboard.writeText(tokenAddress)}
-            className="px-3 py-1 rounded bg-primary/20 text-primary text-xs font-medium hover:bg-primary/30 transition-colors"
-          >
-            Copier
-          </button>
-        </div>
-      </section>
-
-      {/* Dirham Presentation */}
-      <section className="px-4 md:px-12 py-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-            <img
-              src={dirhamCoin.url}
-              alt="Pièce Token Dirham (DIR)"
-              className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover glow shadow-2xl border border-accent/30 flex-shrink-0"
-            />
-            <h2 className="text-3xl md:text-4xl text-center md:text-left text-gradient">Le Token Dirham</h2>
-          </div>
-          <div className="space-y-4 text-sm md:text-base text-muted-foreground leading-relaxed">
-            <p>
-              Le token <span className="text-foreground font-semibold">Dirham</span> est une initiative innovante dans l'univers des cryptomonnaies, se distinguant par sa transparence et sa rareté. Contrairement à de nombreux projets où l'offre peut évoluer au fil du temps, le Dirham repose sur un principe fondamental : une quantité fixe et immuable de <span className="text-accent font-semibold">1 000 000 000 unités</span>.
-            </p>
-            <p>
-              Ce qui rend ce token particulièrement unique, c'est que l'intégralité de ces unités a déjà été créée (mintée) dès le départ. Aucun nouveau token ne pourra être généré à l'avenir, ce qui garantit une rareté totale et élimine tout risque d'inflation.
-            </p>
-            <p>
-              De plus, tous les tokens Dirham ont été acquis via du <span className="text-foreground">Polygon</span>, assurant une base technologique fiable, rapide et économique. Une caractéristique essentielle du projet est que l'ensemble des tokens est bloqué sur un exchange, ce qui empêche toute manipulation ou création supplémentaire par le propriétaire du projet.
-            </p>
-            <p>
-              Ainsi, le créateur lui-même ne dispose d'aucun privilège particulier : il ne peut pas générer de nouveaux tokens ni en obtenir autrement qu'en les achetant, exactement comme n'importe quel autre utilisateur. Ce fonctionnement renforce la confiance, l'équité et la transparence du système.
-            </p>
-            <p>
-              En résumé, le Dirham se positionne comme un token unique au monde grâce à son offre totalement limitée, sa distribution déjà finalisée, et l'impossibilité absolue pour quiconque — y compris son créateur — d'en produire davantage. Cette approche vise à instaurer un écosystème juste, sécurisé et durable.
-            </p>
           </div>
         </div>
       </section>
@@ -146,7 +97,7 @@ const HomePage = () => {
           </div>
           <div className="flex gap-6 justify-center mb-8 text-xs text-muted-foreground">
             <Link to="/livre-blanc" className="hover:text-foreground">Livre Blanc</Link>
-            <Link to="/jetons" className="hover:text-foreground">Jetons</Link>
+            <Link to="/heian-wallet" className="hover:text-foreground">Heian Wallet</Link>
             <Link to="/articles" className="hover:text-foreground">Articles</Link>
           </div>
           <div className="flex gap-6 justify-center text-sm">

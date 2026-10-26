@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const LivreBlancPage = () => {
   return (
     <div className="min-h-screen pt-20 px-4 md:px-12">
@@ -29,21 +31,6 @@ const LivreBlancPage = () => {
 
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-8 bg-accent rounded-full" />
-            <h2 className="text-3xl text-gradient-gold">🪙 Tokens & Internal Economy</h2>
-          </div>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            The <strong className="text-foreground">official tokens</strong> of the Imarat El Djazair ecosystem are{" "}
-            <strong className="text-accent">inter-convertible</strong> according to transparent internal rules. They are{" "}
-            <strong className="text-foreground">not pegged</strong> or controlled by the US dollar or Chinese currency.
-          </p>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            The value of tokens is based on their real utility, exchange within the community, and mutual trust.
-          </p>
-        </section>
-
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-8 bg-primary rounded-full" />
             <h2 className="text-3xl text-gradient">🏗️ Ecosystem</h2>
           </div>
@@ -54,7 +41,7 @@ const LivreBlancPage = () => {
               { icon: "📺", title: "IPTV", desc: "Télévision en direct" },
               { icon: "📰", title: "Articles", desc: "Analyses et réflexions" },
               { icon: "🕌", title: "Religion", desc: "Contenu spirituel" },
-              { icon: "💱", title: "Swap", desc: "Échange de tokens décentralisé" },
+              { icon: "👛", title: "Heian Wallet", desc: "Wallet open source non-custodial" },
             ].map((item) => (
               <div key={item.title} className="card-shine rounded-lg border border-border p-4">
                 <span className="text-lg">{item.icon}</span>
@@ -70,14 +57,12 @@ const LivreBlancPage = () => {
           <p className="text-sm text-muted-foreground mb-4">
             Participez à la construction d'une économie numérique souveraine et décentralisée.
           </p>
-          <a
-            href="https://thirdweb.com/polygon/0x07221c2D1dc1D5485Bf069871E2820864B4948F7"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/heian-wallet"
             className="inline-block px-6 py-2.5 rounded-md bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity glow"
           >
-            Acheter DZD
-          </a>
+            Découvrir Heian Wallet
+          </Link>
         </section>
       </div>
     </div>

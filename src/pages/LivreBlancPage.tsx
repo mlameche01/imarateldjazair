@@ -36,7 +36,7 @@ const LivreBlancPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { icon: "🎬", title: "Cinéma", desc: "Télévision en direct avec TOD" },
+              { icon: "🎬", title: "Cinéma", desc: "Cinéma et TV gratuits (ARTE, France 24)" },
               { icon: "📻", title: "Radios", desc: "Radios algériennes et internationales" },
               { icon: "📺", title: "IPTV", desc: "Télévision en direct" },
               { icon: "📰", title: "Articles", desc: "Analyses et réflexions" },

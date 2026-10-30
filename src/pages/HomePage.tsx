@@ -6,7 +6,7 @@ const HomePage = () => {
   const donationAddress = "0xea99BD1cdd9A5067CDc19506B59De5B29631DFD5";
 
   const quickLinks = [
-    { label: "🎬 Cinéma", desc: "Télévision en direct avec TOD", path: "/cinema" },
+    { label: "🎬 Cinéma", desc: "Cinéma et TV gratuits (ARTE, France 24)", path: "/cinema" },
     { label: "📻 Radios", desc: "Radios algériennes et internationales", path: "/radios" },
     { label: "📺 IPTV", desc: "Télévision en streaming", path: "/iptv" },
     { label: "📰 Articles", desc: "Analyses géopolitiques et crypto", path: "/articles" },

@@ -41,7 +41,7 @@ const LivreBlancPage = () => {
               { icon: "📺", title: "IPTV", desc: "Télévision en direct" },
               { icon: "📰", title: "Articles", desc: "Analyses et réflexions" },
               { icon: "🕌", title: "Religion", desc: "Contenu spirituel" },
-              { icon: "👛", title: "Heian Wallet", desc: "Wallet open source non-custodial" },
+              { icon: "👛", title: "DZD Wallet", desc: "Portefeuille DZD non-custodial" },
             ].map((item) => (
               <div key={item.title} className="card-shine rounded-lg border border-border p-4">
                 <span className="text-lg">{item.icon}</span>
@@ -58,10 +58,10 @@ const LivreBlancPage = () => {
             Participez à la construction d'une économie numérique souveraine et décentralisée.
           </p>
           <Link
-            to="/heian-wallet"
+            to="/dzd-wallet"
             className="inline-block px-6 py-2.5 rounded-md bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity glow"
           >
-            Découvrir Heian Wallet
+            Découvrir DZD Wallet
           </Link>
         </section>
       </div>

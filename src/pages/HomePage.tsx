@@ -10,7 +10,7 @@ const HomePage = () => {
     { label: "📻 Radios", desc: "Radios algériennes et internationales", path: "/radios" },
     { label: "📺 IPTV", desc: "Télévision en streaming", path: "/iptv" },
     { label: "📰 Articles", desc: "Analyses géopolitiques et crypto", path: "/articles" },
-    { label: "👛 Heian Wallet", desc: "Wallet open source pour stablecoins", path: "/heian-wallet" },
+    { label: "👛 DZD Wallet", desc: "Portefeuille DZD non-custodial", path: "/dzd-wallet" },
     { label: "🕌 Religion", desc: "Contenu spirituel et réflexions", path: "/religion" },
   ];
 
@@ -44,10 +44,10 @@ const HomePage = () => {
               Livre Blanc
             </Link>
             <Link
-              to="/heian-wallet"
+              to="/dzd-wallet"
               className="px-6 py-2.5 rounded-md border border-accent/50 text-accent font-medium text-sm hover:bg-accent/10 transition-colors"
             >
-              Heian Wallet
+              DZD Wallet
             </Link>
           </div>
         </div>
@@ -97,7 +97,7 @@ const HomePage = () => {
           </div>
           <div className="flex gap-6 justify-center mb-8 text-xs text-muted-foreground">
             <Link to="/livre-blanc" className="hover:text-foreground">Livre Blanc</Link>
-            <Link to="/heian-wallet" className="hover:text-foreground">Heian Wallet</Link>
+            <Link to="/dzd-wallet" className="hover:text-foreground">DZD Wallet</Link>
             <Link to="/articles" className="hover:text-foreground">Articles</Link>
           </div>
           <div className="flex gap-6 justify-center text-sm">

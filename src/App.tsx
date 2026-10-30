@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainNavbar from "@/components/MainNavbar";
+import WhatsAppChat from "@/components/WhatsAppChat";
 import HomePage from "./pages/HomePage";
 import RadiosPage from "./pages/RadiosPage";
 import IPTVPage from "./pages/IPTVPage";
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/dzd-wallet" element={<DzdWalletPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <WhatsAppChat />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

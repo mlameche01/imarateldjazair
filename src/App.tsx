@@ -12,7 +12,7 @@ import ReligionPage from "./pages/ReligionPage";
 import LivreBlancPage from "./pages/LivreBlancPage";
 import AlgiersRadioPage from "./pages/AlgiersRadioPage";
 import DzTubePage from "./pages/DzTubePage";
-import HeianWalletPage from "./pages/HeianWalletPage";
+import DzdWalletPage from "./pages/DzdWalletPage";
 
 import NotFound from "./pages/NotFound";
 
@@ -34,7 +34,7 @@ const App = () => (
           <Route path="/livre-blanc" element={<LivreBlancPage />} />
           <Route path="/algiers-radio" element={<AlgiersRadioPage />} />
           <Route path="/dztube" element={<DzTubePage />} />
-          <Route path="/heian-wallet" element={<HeianWalletPage />} />
+          <Route path="/dzd-wallet" element={<DzdWalletPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

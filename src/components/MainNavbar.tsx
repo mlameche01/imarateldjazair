@@ -11,7 +11,7 @@ const navItems = [
   { path: "/religion", label: "Religion" },
   { path: "/livre-blanc", label: "Livre Blanc" },
   { path: "/dztube", label: "DzTube" },
-  { path: "/heian-wallet", label: "Heian Wallet" },
+  { path: "/dzd-wallet", label: "DZD Wallet" },
 ];
 
 const MainNavbar = () => {
@@ -46,10 +46,10 @@ const MainNavbar = () => {
 
         <div className="flex items-center gap-2">
           <Link
-            to="/heian-wallet"
+            to="/dzd-wallet"
             className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-primary/30 text-primary text-sm hover:bg-primary/10 transition-colors"
           >
-            Heian Wallet
+            DZD Wallet
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -77,11 +77,11 @@ const MainNavbar = () => {
             </Link>
           ))}
           <Link
-            to="/heian-wallet"
+            to="/dzd-wallet"
             onClick={() => setMobileOpen(false)}
             className="py-2 px-3 text-sm text-primary"
           >
-            Heian Wallet
+            DZD Wallet
           </Link>
         </div>
       )}

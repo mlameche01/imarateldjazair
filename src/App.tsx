@@ -14,6 +14,7 @@ import ReligionPage from "./pages/ReligionPage";
 import LivreBlancPage from "./pages/LivreBlancPage";
 import AlgiersRadioPage from "./pages/AlgiersRadioPage";
 import DzTubePage from "./pages/DzTubePage";
+import TnTubePage from "./pages/TnTubePage";
 import DzdWalletPage from "./pages/DzdWalletPage";
 import CinemaPage from "./pages/CinemaPage";
 
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/livre-blanc" element={<LivreBlancPage />} />
             <Route path="/algiers-radio" element={<AlgiersRadioPage />} />
             <Route path="/dztube" element={<DzTubePage />} />
+            <Route path="/tntube" element={<TnTubePage />} />
             <Route path="/dzd-wallet" element={<DzdWalletPage />} />
             <Route path="/cinema" element={<CinemaPage />} />
             <Route path="*" element={<NotFound />} />

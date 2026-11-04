@@ -1,7 +1,29 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { ShieldAlert, Loader2 } from "lucide-react";
 
-const CACHE_KEY = "geo-africa-check-v2";
+const CACHE_KEY = "geo-africa-check-v3";
+
+// Wilayas algériennes exclues : Tizi Ouzou (15) et Béjaïa (06)
+const normalize = (s: unknown) =>
+  String(s ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z]/g, "");
+const EXCLUDED_NAMES = ["tiziouzou", "bejaia", "bougie", "bgayet"];
+const EXCLUDED_CODES = ["15", "06", "6", "DZ-15", "DZ-06"];
+export const isExcludedWilaya = (data: {
+  country_code?: string;
+  region?: string;
+  region_code?: string;
+  city?: string;
+}) => {
+  if (data?.country_code !== "DZ") return false;
+  if (data.region_code && EXCLUDED_CODES.includes(String(data.region_code))) return true;
+  const region = normalize(data.region);
+  const city = normalize(data.city);
+  return EXCLUDED_NAMES.some((n) => region.includes(n) || city.includes(n));
+};
 
 type GeoState = "loading" | "allowed" | "blocked";
 
@@ -96,7 +118,9 @@ const GeoGate = ({ children }: { children: ReactNode }) => {
         if (!res.ok) throw new Error("geo check failed");
         const data = await res.json();
         const result: GeoState =
-          data?.country_code && ALLOWED_COUNTRIES.has(data.country_code)
+          data?.country_code &&
+          ALLOWED_COUNTRIES.has(data.country_code) &&
+          !isExcludedWilaya(data)
             ? "allowed"
             : "blocked";
         if (!cancelled) {

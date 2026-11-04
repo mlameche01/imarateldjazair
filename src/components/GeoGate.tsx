@@ -1,15 +1,77 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { ShieldAlert, Loader2 } from "lucide-react";
 
-const CACHE_KEY = "geo-dz-check";
+const CACHE_KEY = "geo-africa-check-v2";
 
 type GeoState = "loading" | "allowed" | "blocked";
 
+// Tous les pays africains (codes ISO 3166-1 alpha-2), sauf le Maroc (MA)
+const ALLOWED_COUNTRIES = new Set([
+  "DZ", // Algérie
+  "AO", // Angola
+  "BJ", // Bénin
+  "BW", // Botswana
+  "BF", // Burkina Faso
+  "BI", // Burundi
+  "CV", // Cap-Vert
+  "CM", // Cameroun
+  "CF", // Centrafrique
+  "KM", // Comores
+  "CG", // Congo
+  "CD", // RD Congo
+  "CI", // Côte d'Ivoire
+  "DJ", // Djibouti
+  "EG", // Égypte
+  "ER", // Érythrée
+  "SZ", // Eswatini
+  "ET", // Éthiopie
+  "GA", // Gabon
+  "GM", // Gambie
+  "GH", // Ghana
+  "GN", // Guinée
+  "GW", // Guinée-Bissau
+  "GQ", // Guinée équatoriale
+  "KE", // Kenya
+  "LS", // Lesotho
+  "LR", // Liberia
+  "LY", // Libye
+  "MG", // Madagascar
+  "MW", // Malawi
+  "ML", // Mali
+  "MR", // Mauritanie
+  "MU", // Maurice
+  "MZ", // Mozambique
+  "NA", // Namibie
+  "NE", // Niger
+  "NG", // Nigeria
+  "UG", // Ouganda
+  "RW", // Rwanda
+  "ST", // São Tomé-et-Principe
+  "SN", // Sénégal
+  "SC", // Seychelles
+  "SL", // Sierra Leone
+  "SO", // Somalie
+  "ZA", // Afrique du Sud
+  "SS", // Soudan du Sud
+  "SD", // Soudan
+  "TZ", // Tanzanie
+  "TD", // Tchad
+  "TG", // Togo
+  "TN", // Tunisie
+  "ZM", // Zambie
+  "ZW", // Zimbabwe
+  "EH", // Sahara occidental
+  "YT", // Mayotte
+  "RE", // La Réunion
+  "SH", // Sainte-Hélène
+  "IO", // Territoire britannique de l'océan Indien
+]);
+
 /**
- * Restreint l'accès du site aux adresses IP algériennes.
+ * Restreint l'accès du site aux adresses IP africaines (sauf le Maroc).
  * Vérification côté client via ipapi.co (gratuit, sans clé).
  * En cas d'erreur réseau, l'accès est autorisé (fail-open)
- * pour ne jamais bloquer un visiteur algérien par accident.
+ * pour ne jamais bloquer un visiteur africain par accident.
  */
 const GeoGate = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<GeoState>(() => {
@@ -34,13 +96,15 @@ const GeoGate = ({ children }: { children: ReactNode }) => {
         if (!res.ok) throw new Error("geo check failed");
         const data = await res.json();
         const result: GeoState =
-          data?.country_code === "DZ" ? "allowed" : "blocked";
+          data?.country_code && ALLOWED_COUNTRIES.has(data.country_code)
+            ? "allowed"
+            : "blocked";
         if (!cancelled) {
           sessionStorage.setItem(CACHE_KEY, result);
           setState(result);
         }
       } catch {
-        // Fail-open : ne jamais bloquer un Algérien à cause d'une panne du service
+        // Fail-open : ne jamais bloquer un Africain à cause d'une panne du service
         if (!cancelled) {
           sessionStorage.setItem(CACHE_KEY, "allowed");
           setState("allowed");
@@ -72,14 +136,15 @@ const GeoGate = ({ children }: { children: ReactNode }) => {
           <ShieldAlert className="h-14 w-14 text-accent" />
         </div>
         <h1 className="font-display text-4xl md:text-5xl text-gradient-gold tracking-wide">
-          Accès réservé à l'Algérie
+          Accès réservé à l'Afrique
         </h1>
         <p className="text-muted-foreground font-body max-w-md leading-relaxed">
           Imarat El Djazair est un portail réservé aux visiteurs se connectant
-          depuis l'Algérie. Votre adresse IP semble provenir d'un autre pays.
+          depuis le continent africain. Votre adresse IP semble provenir d'une
+          région non autorisée.
         </p>
         <p className="text-muted-foreground/60 font-body text-sm" dir="rtl">
-          هذا الموقع مخصص للزوار من الجزائر فقط
+          هذا الموقع مخصص للزوار من القارة الإفريقية فقط
         </p>
       </div>
     );

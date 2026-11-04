@@ -11,6 +11,7 @@ const navItems = [
   { path: "/religion", label: "Religion" },
   { path: "/livre-blanc", label: "Livre Blanc" },
   { path: "/dztube", label: "DzTube" },
+  { path: "/tntube", label: "TnTube" },
   { path: "/dzd-wallet", label: "DZD Wallet" },
 ];
 

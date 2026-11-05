@@ -14,7 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      faucet_claims: {
+        Row: {
+          address: string
+          created_at: string
+          id: string
+          ip: string
+          tx_hash: string | null
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          id?: string
+          ip: string
+          tx_hash?: string | null
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          id?: string
+          ip?: string
+          tx_hash?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

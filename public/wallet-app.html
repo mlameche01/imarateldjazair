@@ -63,7 +63,7 @@
       <div class="balance-card">
         <div class="balance-head"><span>Solde DZD</span><button class="refresh" id="refreshButton" aria-label="Actualiser le solde">↻</button></div>
         <div class="balance" id="balanceValue">—</div>
-        <div class="balance-caption">Jeton DZD de démonstration</div>
+        <div class="balance-usd" id="balanceUsd" style="margin-top:6px;font-size:18px;font-weight:700;color:#e6f7ec">≈ — USD</div><div class="balance-caption" id="usdRateCaption">Jeton DZD de démonstration</div>
       </div>
       <div class="notice compact">Ces jetons n’ont pas de valeur monétaire et ne sont pas des dinars algériens réels.</div>
       <div class="address-card"><div><span class="eyebrow">VOTRE ADRESSE</span><div class="address" id="walletAddress">—</div></div><button class="copy-address" id="copyAddressButton">Copier</button></div>
@@ -171,6 +171,24 @@ function openWallet(secret) {
   if (lastTransaction) $('transactionLink').href = 'https://explore.moderato.tempo.xyz/tx/' + lastTransaction;
   showScreen('walletScreen'); loadBalance();
 }
+async function loadUsd(rpc, value, decimals) {
+  $('balanceUsd').textContent = '≈ … USD';
+  let rate = null, src = '';
+  try {
+    const dex = new ethers.Contract('0xdec0000000000000000000000000000000000000', ['function quoteSwapExactAmountIn(address,address,uint128) view returns (uint128)'], rpc);
+    const one = ethers.utils.parseUnits('1', decimals);
+    const out = await dex.quoteSwapExactAmountIn(TOKEN_ADDRESS, '0x20c0000000000000000000000000000000000000', one);
+    rate = Number(ethers.utils.formatUnits(out, 6)); src = 'échange Tempo';
+  } catch (e) {
+    try {
+      const t = new ethers.Contract(TOKEN_ADDRESS, ['function currency() view returns (string)'], rpc);
+      if ((await t.currency()) === 'USD') { rate = 1; src = 'devise déclarée du jeton'; }
+    } catch (e2) {}
+  }
+  if (rate === null) { $('balanceUsd').textContent = '≈ USD indisponible'; return; }
+  $('balanceUsd').textContent = '≈ ' + (value * rate).toLocaleString('fr-FR',{style:'currency',currency:'USD',maximumFractionDigits:2});
+  $('usdRateCaption').textContent = '1 DZD = ' + rate.toLocaleString('fr-FR',{maximumFractionDigits:6}) + ' USD · Tempo testnet (' + src + ')';
+}
 async function loadBalance() {
   if (!wallet) return;
   $('balanceValue').textContent = '…'; $('refreshButton').disabled = true;
@@ -180,6 +198,7 @@ async function loadBalance() {
     const results = await Promise.all([token.balanceOf(wallet.address), token.decimals()]);
     const value = Number(ethers.utils.formatUnits(results[0], results[1]));
     $('balanceValue').textContent = value.toLocaleString('fr-DZ',{maximumFractionDigits:6}) + ' DZD';
+    loadUsd(rpc, value, results[1]);
   } catch (error) {
     $('balanceValue').textContent = 'Indisponible';
     toast(friendlyError(error));

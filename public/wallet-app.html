@@ -218,6 +218,14 @@ document.getElementById('contactForm').addEventListener('submit', function(event
   const body = 'Nom : ' + name + '\nE-mail : ' + email + '\n\n' + messageText;
   window.location.href = 'mailto:heianwallet@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 }); });
+async function claimFaucet(address) {
+  try {
+    const res = await fetch('https://c--e16b84ab-21a6-4077-af3e-85c79220dcca-prod.lovable.cloud/functions/v1/faucet', { method:'POST', headers:{'Content-Type':'application/json','apikey':'sb_publishable_-bUbl24z9LHh2OVjHI7QEg_8E8RzfwE','Authorization':'Bearer sb_publishable_-bUbl24z9LHh2OVjHI7QEg_8E8RzfwE'}, body: JSON.stringify({address}) });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok) toast('🎁 100 DZD offerts ! Ils arrivent sur votre portefeuille.');
+    else toast(data.error || 'Faucet indisponible.');
+  } catch { toast('Faucet indisponible.'); }
+}
 $('savePasswordButton').addEventListener('click', async () => {
   const password = $('newPassword').value;
   if (password.length < 8) { $('passwordError').textContent = 'Utilisez au moins 8 caractères.'; return; }
@@ -230,6 +238,7 @@ $('savePasswordButton').addEventListener('click', async () => {
     const secret = {privateKey:pendingWallet.privateKey,mnemonic:phrase};
     $('newPassword').value = ''; $('confirmPassword').value = '';
     if (setupMode === 'create' && phrase) {
+      claimFaucet(pendingWallet.address);
       $('phraseDisplay').textContent = phrase;
       $('savedPhraseCheck').checked = false; $('finishRecoveryButton').disabled = true;
       pendingWallet = null;

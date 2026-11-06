@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { Play, Tv, Globe, Star } from "lucide-react";
-import Hls from "hls.js";
+import { useState } from "react";
+import { ExternalLink, Play, Tv, Globe, Star } from "lucide-react";
+import LiveHlsPlayer from "@/components/LiveHlsPlayer";
+import { Button } from "@/components/ui/button";
 
 interface Channel {
   name: string;
@@ -8,14 +9,15 @@ interface Channel {
   streamUrl: string;
   country: string;
   type: "youtube" | "hls";
+  officialUrl?: string;
 }
 
 const channels: Channel[] = [
   { name: "AL24 News", category: "info", streamUrl: "https://cdn.live.easybroadcast.io/abr_corp/66_al24_u4yga6h/corp/66_al24_u4yga6h_240p/chunks.m3u8", country: "🇩🇿", type: "hls" },
   { name: "Al Jazeera Arabic", category: "info", streamUrl: "https://www.youtube.com/embed/bNyUyrR0PHo?autoplay=1", country: "🇶🇦", type: "youtube" },
-  { name: "France 24 Français", category: "info", streamUrl: "https://www.youtube.com/embed/l8PMl7tUDIE?autoplay=1", country: "🇫🇷", type: "youtube" },
-  { name: "RT France", category: "info", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "\uD83C\uDDF7\uD83C\uDDFA", type: "hls" },
-  { name: "TV5 Monde", category: "info", streamUrl: "https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8", country: "\uD83C\uDDEB\uD83C\uDDF7", type: "hls" },
+  { name: "France 24 Français", category: "info", streamUrl: "https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_2300.m3u8", country: "🇫🇷", type: "hls", officialUrl: "https://www.france24.com/fr/direct" },
+  { name: "RT France", category: "info", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "\uD83C\uDDF7\uD83C\uDDFA", type: "hls", officialUrl: "https://francais.rt.com/en-direct" },
+  { name: "TV5 Monde", category: "info", streamUrl: "https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8", country: "\uD83C\uDDEB\uD83C\uDDF7", type: "hls", officialUrl: "https://information.tv5monde.com/direct" },
   { name: "One FM", category: "suisse", streamUrl: "https://onefmhd.vedge.infomaniak.com/livecast/ik:onefmhd/manifest.m3u8", country: "🇨🇭", type: "hls" },
   { name: "Event TV", category: "suisse", streamUrl: "https://edge13.vedge.infomaniak.com/livecast/ik:event/manifest.m3u8", country: "🇨🇭", type: "hls" },
   { name: "Compack Media", category: "suisse", streamUrl: "https://edge17.vedge.infomaniak.com/livecast/ik:compack_media_1/playlist.m3u8", country: "🇨🇭", type: "hls" },
@@ -29,38 +31,6 @@ const categories = [
   { id: "suisse", label: "Suisse FR", icon: Star },
 ];
 
-const HlsPlayer = ({ src }: { src: string }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(src);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(() => {});
-      });
-      return () => hls.destroy();
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = src;
-      video.play().catch(() => {});
-    }
-  }, [src]);
-
-  return (
-    <video
-      ref={videoRef}
-      className="w-full h-full bg-black"
-      controls
-      autoPlay
-      muted
-    />
-  );
-};
-
 const IPTVPage = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeChannel, setActiveChannel] = useState<Channel>(channels[0]);
@@ -72,7 +42,7 @@ const IPTVPage = () => {
   return (
     <div className="min-h-screen pt-16 bg-background">
       {/* Player */}
-      <div className="w-full bg-black">
+      <div className="w-full bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="aspect-video">
             {activeChannel.type === "youtube" ? (
@@ -84,7 +54,7 @@ const IPTVPage = () => {
                 title={activeChannel.name}
               />
             ) : (
-              <HlsPlayer src={activeChannel.streamUrl} />
+              <LiveHlsPlayer src={activeChannel.streamUrl} name={activeChannel.name} officialUrl={activeChannel.officialUrl} />
             )}
           </div>
           <div className="px-4 py-3 flex items-center gap-3">
@@ -93,6 +63,7 @@ const IPTVPage = () => {
               <h2 className="text-lg font-semibold text-foreground">{activeChannel.name}</h2>
               <p className="text-xs text-muted-foreground">En direct</p>
             </div>
+            {activeChannel.officialUrl && <Button asChild variant="outline" size="sm" className="ml-auto"><a href={activeChannel.officialUrl} target="_blank" rel="noopener noreferrer" aria-label={`Site officiel ${activeChannel.name}`}><ExternalLink /><span className="hidden sm:inline">Site officiel</span></a></Button>}
           </div>
         </div>
       </div>
@@ -101,7 +72,7 @@ const IPTVPage = () => {
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex gap-2 flex-wrap mb-6">
           {categories.map((cat) => (
-            <button
+            <Button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -111,17 +82,17 @@ const IPTVPage = () => {
               }`}
             >
               {cat.label}
-            </button>
+            </Button>
           ))}
         </div>
 
         {/* Channel Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {filtered.map((channel) => (
-            <button
+            <Button
               key={channel.name}
               onClick={() => setActiveChannel(channel)}
-              className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${
+              className={`flex h-auto justify-start whitespace-normal items-center gap-3 p-4 rounded-lg border text-left transition-all ${
                 activeChannel.name === channel.name
                   ? "border-primary bg-primary/10"
                   : "border-border bg-card hover:border-primary/30"
@@ -135,7 +106,7 @@ const IPTVPage = () => {
                 </p>
               </div>
               <Play className="w-4 h-4 text-primary shrink-0" />
-            </button>
+            </Button>
           ))}
         </div>
       </div>

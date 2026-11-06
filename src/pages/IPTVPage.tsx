@@ -8,7 +8,7 @@ interface Channel {
   category: string;
   streamUrl: string;
   country: string;
-  type: "youtube" | "hls";
+  type: "youtube" | "hls" | "external";
   officialUrl?: string;
 }
 
@@ -17,7 +17,7 @@ const channels: Channel[] = [
   { name: "Al Jazeera Arabic", category: "info", streamUrl: "https://www.youtube.com/embed/bNyUyrR0PHo?autoplay=1", country: "🇶🇦", type: "youtube" },
   { name: "France 24 Français", category: "info", streamUrl: "https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_2300.m3u8", country: "🇫🇷", type: "hls", officialUrl: "https://www.france24.com/fr/direct" },
   { name: "RT France", category: "info", streamUrl: "https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8", country: "\uD83C\uDDF7\uD83C\uDDFA", type: "hls", officialUrl: "https://francais.rt.com/en-direct" },
-  { name: "TV5 Monde", category: "info", streamUrl: "https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8", country: "\uD83C\uDDEB\uD83C\uDDF7", type: "hls", officialUrl: "https://information.tv5monde.com/direct" },
+  { name: "TV5 Monde", category: "info", streamUrl: "https://www.tv5monde.com/", country: "\uD83C\uDDEB\uD83C\uDDF7", type: "external", officialUrl: "https://www.tv5monde.com/" },
   { name: "One FM", category: "suisse", streamUrl: "https://onefmhd.vedge.infomaniak.com/livecast/ik:onefmhd/manifest.m3u8", country: "🇨🇭", type: "hls" },
   { name: "Event TV", category: "suisse", streamUrl: "https://edge13.vedge.infomaniak.com/livecast/ik:event/manifest.m3u8", country: "🇨🇭", type: "hls" },
   { name: "Compack Media", category: "suisse", streamUrl: "https://edge17.vedge.infomaniak.com/livecast/ik:compack_media_1/playlist.m3u8", country: "🇨🇭", type: "hls" },
@@ -45,7 +45,13 @@ const IPTVPage = () => {
       <div className="w-full bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="aspect-video">
-            {activeChannel.type === "youtube" ? (
+            {activeChannel.type === "external" ? (
+              <div className="h-full flex flex-col items-center justify-center gap-4 p-4 text-center">
+                <h2 className="text-2xl">TV5 Monde</h2>
+                <p className="text-sm text-muted-foreground">TV5 Monde ne permet pas la lecture de ce flux sur ce site.</p>
+                <Button asChild><a href={activeChannel.streamUrl} target="_blank" rel="noopener noreferrer"><ExternalLink />Ouvrir TV5 Monde</a></Button>
+              </div>
+            ) : activeChannel.type === "youtube" ? (
               <iframe
                 src={activeChannel.streamUrl}
                 className="w-full h-full"
@@ -91,6 +97,7 @@ const IPTVPage = () => {
           {filtered.map((channel) => (
             <Button
               key={channel.name}
+              variant="secondary"
               onClick={() => setActiveChannel(channel)}
               className={`flex h-auto justify-start whitespace-normal items-center gap-3 p-4 rounded-lg border text-left transition-all ${
                 activeChannel.name === channel.name

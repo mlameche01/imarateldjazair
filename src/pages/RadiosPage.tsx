@@ -92,6 +92,7 @@ const RadiosPage = () => {
           {radios.map((radio) => (
             <Button
               key={radio.name}
+              variant="secondary"
               onClick={() =>
                 currentRadio === radio.name ? stopRadio() : playRadio(radio)
               }
@@ -138,7 +139,7 @@ const RadiosPage = () => {
 
         {/* Bottom bar for stream radios */}
         {currentRadio && !iframeRadio && (
-          <div className="fixed bottom-0 left-0 right-0 glass border-t border-border p-4 flex items-center justify-between z-50">
+          <div className="fixed bottom-0 left-0 right-0 glass border-t border-border p-4 pr-24 flex items-center justify-between z-50">
             <div className="flex items-center gap-3">
               <Volume2 className={`w-5 h-5 text-primary ${isPlaying ? "animate-pulse" : ""}`} />
               <span className="text-sm font-medium">{currentRadio}</span>

@@ -68,10 +68,18 @@
       <div class="notice compact">Ces jetons n’ont pas de valeur monétaire et ne sont pas des dinars algériens réels.</div>
       <div class="address-card"><div><span class="eyebrow">VOTRE ADRESSE</span><div class="address" id="walletAddress">—</div></div><button class="copy-address" id="copyAddressButton">Copier</button></div>
       <div class="action-grid"><button class="action" id="receiveButton"><span>↓</span>Recevoir</button><button class="action action-send" id="sendButton"><span>↗</span>Envoyer</button></div>
-      <div class="activity-card"><h2>Activité récente</h2><p class="muted" id="activityText">Vos opérations confirmées apparaîtront ici.</p><a id="transactionLink" target="_blank" rel="noopener" hidden>Voir la transaction</a></div>
+      <div class="activity-card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Historique des activités</h2><button class="refresh" id="historyRefresh" aria-label="Actualiser l'historique">↻</button></div><p class="muted" id="activityText">Vos opérations confirmées apparaîtront ici.</p><a id="transactionLink" target="_blank" rel="noopener" hidden>Voir la transaction</a><ul id="historyList" style="list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:8px"></ul></div>
+      <button class="secondary" id="showPhraseButton">🔑 Afficher ma phrase de récupération</button>
       <button class="text-button lock-link" id="deleteWalletButton">Effacer le portefeuille</button>
     </section>
 
+    <section id="revealScreen" class="screen sub-screen" hidden>
+      <button class="back-button" id="revealBackButton">← Retour</button>
+      <h1>Phrase de récupération</h1>
+      <p class="muted">Ne la montrez jamais à personne. Quiconque la possède contrôle vos fonds.</p>
+      <div id="revealForm"><label for="revealPassword">Mot de passe</label><input id="revealPassword" type="password" autocomplete="current-password" placeholder="Votre mot de passe"><p class="error" id="revealError" role="alert"></p><button class="primary" id="revealConfirm">Afficher la phrase</button></div>
+      <div id="revealResult" hidden><div class="phrase-box" id="revealPhrase"></div><button class="secondary" id="revealCopy">Copier la phrase</button></div>
+    </section>
     <section id="receiveScreen" class="screen sub-screen" hidden>
       <button class="back-button" data-back>← Retour</button><p class="eyebrow">RECEVOIR</p><h1>Votre adresse</h1>
       <p class="muted">Partagez cette adresse pour recevoir des jetons compatibles.</p>
@@ -169,7 +177,7 @@ function openWallet(secret) {
   $('activityText').textContent = lastTransaction ? 'Dernier envoi soumis.' : 'Vos opérations confirmées apparaîtront ici.';
   $('transactionLink').hidden = !lastTransaction;
   if (lastTransaction) $('transactionLink').href = 'https://explore.moderato.tempo.xyz/tx/' + lastTransaction;
-  showScreen('walletScreen'); loadBalance();
+  showScreen('walletScreen'); loadBalance(); loadHistory();
 }
 async function loadUsd(rpc, value, decimals) {
   $('balanceUsd').textContent = '≈ … USD';
@@ -237,6 +245,58 @@ document.getElementById('contactForm').addEventListener('submit', function(event
   const body = 'Nom : ' + name + '\nE-mail : ' + email + '\n\n' + messageText;
   window.location.href = 'mailto:heianwallet@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 }); });
+
+const TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
+const short = a => a.slice(0,6)+'…'+a.slice(-4);
+async function loadHistory() {
+  if (!wallet) return;
+  const list = $('historyList'); const me = wallet.address;
+  $('activityText').textContent = 'Chargement de l’historique…'; list.innerHTML = '';
+  try {
+    const rpc = provider();
+    const decimals = await new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, rpc).decimals();
+    const pad = ethers.utils.hexZeroPad(me, 32).toLowerCase();
+    let to = await rpc.getBlockNumber(); const STEP = 99999; let logs = [];
+    for (let i = 0; i < 12 && to > 0 && logs.length < 30; i++) {
+      const from = Math.max(0, to - STEP);
+      const q = (topics) => rpc.send('eth_getLogs', [{ address: TOKEN_ADDRESS, fromBlock: ethers.utils.hexValue(from), toBlock: ethers.utils.hexValue(to), topics }]);
+      const r = await Promise.all([q([TRANSFER_TOPIC, pad]), q([TRANSFER_TOPIC, null, pad])]);
+      logs = logs.concat(r[0], r[1]); to = from - 1;
+    }
+    const seen = new Set();
+    logs = logs.filter(l => { const k = l.transactionHash + l.logIndex; if (seen.has(k)) return false; seen.add(k); return true; })
+      .sort((a, b) => parseInt(b.blockNumber) - parseInt(a.blockNumber)).slice(0, 30);
+    if (!logs.length) { $('activityText').textContent = 'Aucune activité récente.'; return; }
+    $('activityText').textContent = logs.length + ' opération(s) récente(s)';
+    const times = {};
+    await Promise.all([...new Set(logs.map(l => l.blockNumber))].slice(0, 30).map(async b => { try { times[b] = (await rpc.getBlock(parseInt(b))).timestamp; } catch {} }));
+    for (const l of logs) {
+      const fromA = ethers.utils.getAddress('0x' + l.topics[1].slice(26)); const toA = ethers.utils.getAddress('0x' + l.topics[2].slice(26));
+      const out = fromA.toLowerCase() === me.toLowerCase();
+      const amt = Number(ethers.utils.formatUnits(l.data, decimals)).toLocaleString('fr-DZ', { maximumFractionDigits: 6 });
+      const t = times[l.blockNumber] ? new Date(times[l.blockNumber] * 1000).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : '';
+      const li = document.createElement('li');
+      li.style.cssText = 'display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:10px;background:rgba(255,255,255,.05);font-size:14px';
+      li.innerHTML = '<div><strong>' + (out ? '↗ Envoyé' : '↓ Reçu') + '</strong><div class="muted" style="font-size:12px">' + (out ? 'à ' + short(toA) : 'de ' + short(fromA)) + (t ? ' · ' + t : '') + '</div></div><div style="text-align:right"><strong style="color:' + (out ? '#ff8a8a' : '#7be3a0') + '">' + (out ? '−' : '+') + amt + ' DZD</strong><div><a target="_blank" rel="noopener" style="font-size:12px" href="https://explore.moderato.tempo.xyz/tx/' + l.transactionHash + '">Détails</a></div></div>';
+      list.appendChild(li);
+    }
+  } catch (e) { $('activityText').textContent = 'Historique indisponible pour le moment.'; }
+}
+$('historyRefresh').addEventListener('click', loadHistory);
+$('showPhraseButton').addEventListener('click', () => { $('revealPassword').value=''; $('revealError').textContent=''; $('revealForm').hidden=false; $('revealResult').hidden=true; $('revealPhrase').textContent=''; showScreen('revealScreen'); });
+$('revealBackButton').addEventListener('click', () => { $('revealPhrase').textContent=''; showScreen('walletScreen'); });
+$('revealConfirm').addEventListener('click', async () => {
+  $('revealError').textContent=''; $('revealConfirm').disabled=true;
+  try {
+    const secret = await decryptWallet($('revealPassword').value);
+    $('revealPassword').value='';
+    if (!secret.mnemonic) { $('revealError').textContent='Ce portefeuille n’a pas de phrase enregistrée.'; return; }
+    $('revealPhrase').textContent = secret.mnemonic; $('revealForm').hidden=true; $('revealResult').hidden=false;
+  } catch { $('revealError').textContent='Mot de passe incorrect.'; }
+  finally { $('revealConfirm').disabled=false; }
+});
+$('revealPassword').addEventListener('keydown', e => { if (e.key==='Enter') $('revealConfirm').click(); });
+$('revealCopy').addEventListener('click', async () => { try { await navigator.clipboard.writeText($('revealPhrase').textContent); toast('Phrase copiée.'); } catch { toast('Copie impossible.'); } });
 async function claimFaucet(address) {
   try {
     const res = await fetch('https://c--e16b84ab-21a6-4077-af3e-85c79220dcca-prod.lovable.cloud/functions/v1/faucet', { method:'POST', headers:{'Content-Type':'application/json','apikey':'sb_publishable_-bUbl24z9LHh2OVjHI7QEg_8E8RzfwE','Authorization':'Bearer sb_publishable_-bUbl24z9LHh2OVjHI7QEg_8E8RzfwE'}, body: JSON.stringify({address}) });

@@ -1,4 +1,4 @@
 # Corrections de lecture
-- [ ] Vérifier et remplacer les liens RT France, France 24 et TV5 Monde.
-- [ ] Vérifier et remplacer les liens Europe 1 et RTL.
-- [ ] Corriger les erreurs de lecture et vérifier les cinq stations dans le site.
+- [x] RT France et France 24 : lecture vérifiée ; TV5 Monde : flux bloqué pour les sites tiers, remplacé par un lien officiel disponible.
+- [x] Europe 1 et RTL : nouveaux liens et démarrage de la lecture vérifiés.
+- [x] Reprise après erreur testée, arrêt radio vérifié et affichage téléphone contrôlé.

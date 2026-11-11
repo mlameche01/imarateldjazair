@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Search, Menu, X, Moon } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { ATLAS_URL } from "@/lib/atlas";
 
-const navItems = [
+const navItems: { path: string; label: string; external?: boolean }[] = [
   { path: "/", label: "Accueil" },
   { path: "/algiers-radio", label: "Audius" },
   { path: "/iptv", label: "IPTV" },
-  { path: "/articles", label: "Atlas" },
+  { path: ATLAS_URL, label: "Atlas ↗", external: true },
   { path: "/religion", label: "Religion" },
   { path: "/livre-blanc", label: "Livre Blanc" },
   { path: "/dztube", label: "DzTube" },
@@ -30,10 +31,15 @@ const MainNavbar = () => {
         </Link>
 
         <div className="hidden lg:flex items-center gap-1">
-          {navItems.map((item) => (
-            <Link
+          {navItems.map((item) => {
+            const Cmp: any = item.external ? "a" : Link;
+            const props = item.external
+              ? { href: item.path, target: "_blank", rel: "noopener noreferrer" }
+              : { to: item.path };
+            return (
+            <Cmp
               key={item.path}
-              to={item.path}
+              {...props}
               className={`px-3 py-1.5 rounded-md text-sm transition-colors ${
                 location.pathname === item.path
                   ? "text-primary bg-primary/10"
@@ -41,8 +47,9 @@ const MainNavbar = () => {
               }`}
             >
               {item.label}
-            </Link>
-          ))}
+            </Cmp>
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-2">
@@ -63,10 +70,15 @@ const MainNavbar = () => {
 
       {mobileOpen && (
         <div className="lg:hidden px-4 pb-4 flex flex-col gap-1 glass">
-          {navItems.map((item) => (
-            <Link
+          {navItems.map((item) => {
+            const Cmp: any = item.external ? "a" : Link;
+            const props = item.external
+              ? { href: item.path, target: "_blank", rel: "noopener noreferrer" }
+              : { to: item.path };
+            return (
+            <Cmp
               key={item.path}
-              to={item.path}
+              {...props}
               onClick={() => setMobileOpen(false)}
               className={`py-2 px-3 rounded-md text-sm transition-colors ${
                 location.pathname === item.path
@@ -75,8 +87,9 @@ const MainNavbar = () => {
               }`}
             >
               {item.label}
-            </Link>
-          ))}
+            </Cmp>
+            );
+          })}
           <Link
             to="/dzd-wallet"
             onClick={() => setMobileOpen(false)}

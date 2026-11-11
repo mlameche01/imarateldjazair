@@ -9,7 +9,7 @@ const HomePage = () => {
     { label: "🎬 Cinéma", desc: "Cinéma et TV gratuits (ARTE, France 24)", path: "/cinema" },
     { label: "📻 Radios", desc: "Radios algériennes et internationales", path: "/radios" },
     { label: "📺 IPTV", desc: "Télévision en streaming", path: "/iptv" },
-    { label: "📰 Articles", desc: "Analyses géopolitiques et crypto", path: "/articles" },
+    { label: "🧭 Atlas", desc: "Navigateur léger, Windows et Linux", path: "/articles" },
     { label: "👛 DZD Wallet", desc: "Portefeuille DZD non-custodial", path: "/dzd-wallet" },
     { label: "🕌 Religion", desc: "Contenu spirituel et réflexions", path: "/religion" },
   ];
@@ -98,7 +98,7 @@ const HomePage = () => {
           <div className="flex gap-6 justify-center mb-8 text-xs text-muted-foreground">
             <Link to="/livre-blanc" className="hover:text-foreground">Livre Blanc</Link>
             <Link to="/dzd-wallet" className="hover:text-foreground">DZD Wallet</Link>
-            <Link to="/articles" className="hover:text-foreground">Articles</Link>
+            <Link to="/articles" className="hover:text-foreground">Atlas</Link>
           </div>
           <div className="flex gap-6 justify-center text-sm">
             <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Facebook</a>

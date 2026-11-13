@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import heroHome from "@/assets/hero-home.jpg";
-import drapeauImara from "@/assets/drapeau-imara.png.asset.json";
+import accueilImara from "@/assets/accueil-imara.png";
 
 const HomePage = () => {
   const donationAddress = "0xea99BD1cdd9A5067CDc19506B59De5B29631DFD5";
@@ -23,9 +23,9 @@ const HomePage = () => {
         <div className="absolute inset-0 hero-overlay" />
         <div className="relative z-10 text-center px-4 max-w-3xl">
           <img
-            src={drapeauImara.url}
-            alt="Drapeau Imarat El Djazair — El 3azzam"
-            className="w-48 md:w-64 mx-auto mb-6 rounded-lg shadow-2xl border border-accent/30 glow"
+            src={accueilImara}
+            alt="Imarat El Djazair — Social et Solidaire"
+            className="w-72 md:w-[28rem] mx-auto mb-6 rounded-lg shadow-2xl border border-accent/30 glow"
           />
           <h1 className="text-5xl md:text-7xl tracking-wider text-gradient mb-4">
             Imarat El Djazair
